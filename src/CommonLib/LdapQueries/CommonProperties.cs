@@ -97,5 +97,9 @@
         public static readonly string[] StealthProperties = {
             LDAPProperties.HomeDirectory, LDAPProperties.ScriptPath, LDAPProperties.ProfilePath
         };
+
+        public static readonly string[] IncrementalCollectionProperties = {
+            LDAPProperties.USNChanged
+        };
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SharpHoundCommonLib.LDAPQueries {
@@ -216,6 +217,18 @@ namespace SharpHoundCommonLib.LDAPQueries {
         }
 
         /// <summary>
+        ///     Add a filter to support incremental collection based on the uSNChanged attribute
+        /// </summary>
+        /// <param name="usn"></param>
+        /// <returns></returns>
+        public LdapFilter AddUSNChanged(long usn)
+        {
+            _mandatory.Add($"(uSNChanged>={usn})");
+
+            return this;
+        }
+
+        /// <summary>
         ///     Adds a generic user specified filter
         /// </summary>
         /// <param name="filter">LDAP Filter to add to query</param>
@@ -256,7 +269,9 @@ namespace SharpHoundCommonLib.LDAPQueries {
         }
 
         public IEnumerable<string> GetFilterList() {
-            return _filterParts.Distinct();
+            var mandatoryList = _mandatory.ToArray().Distinct();
+            var mandatoryDistinct = string.Join("", mandatoryList);
+            return _filterParts.Distinct().Select(part => $"(&({part}){mandatoryDistinct})");
         }
     }
 }
