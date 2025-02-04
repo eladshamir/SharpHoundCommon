@@ -10,5 +10,8 @@ namespace SharpHoundCommonLib.OutputTypes
         [DataMember(Name = "count")] public long Count { get; set; }
         [DataMember(Name = "version")] public int Version { get; set; }
         [DataMember(Name = "collectorversion")] public string CollectorVersion { get; set; }
+        [DataMember(Name = "incremental")] public bool Incremental { get; set; }
+
+        [DataMember(Name = "highestusn")] public long? HighestUSN { get; set; }
     }
 }

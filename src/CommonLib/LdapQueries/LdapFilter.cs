@@ -223,7 +223,7 @@ namespace SharpHoundCommonLib.LDAPQueries {
         /// <returns></returns>
         public LdapFilter AddUSNChanged(long usn)
         {
-            _mandatory.Add($"(uSNChanged>={usn})");
+            if (usn > 0) _mandatory.Add($"(uSNChanged>={usn})");
 
             return this;
         }
